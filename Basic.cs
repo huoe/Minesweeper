@@ -46,12 +46,18 @@ namespace Minesweeper
             }
             return outNumber;
         }
+        /// <summary>
+        /// 赋值交换a,b
+        /// </summary>
         public static void Change(ref int a, ref int b)
         {
             int c = a;
             a = b;
             b = c;
         }
+        /// <summary>
+        /// 返回一个特定大小，填充了a的数组
+        /// </summary>
         public static string[,] FillArray(int x, int y, string a)
         {
             string[,] outstring = new string[x, y];

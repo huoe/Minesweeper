@@ -8,15 +8,12 @@ namespace Minesweeper
         {
             while (true)
             {
-                Console.WriteLine("loading......");
-                Console.SetBufferSize(90, 70);
-                //Console.SetWindowSize(85, 65);
-                Minesweeper ms = new Minesweeper(40, 30, 100);
+
+                Minesweeper ms = new Minesweeper(40, 20, 100);
                 ms.Start();
                 Console.ReadKey(true);
                 Console.Clear();
             }
-
         }
     }
 }

@@ -8,6 +8,8 @@ namespace Minesweeper
     {
         public Minesweeper(int x, int y, int mine)
         {
+            Console.Title = "Minesweeper";
+            Console.WriteLine("loading......");
             Size = new Point();
             Size.X = x;
             Size.Y = y;
@@ -17,6 +19,9 @@ namespace Minesweeper
             Console.CursorVisible = false;
             player.state = 0;
         }
+        /// <summary>
+        /// 游戏主体，开始运行
+        /// </summary>
         public void Start()
         {
             Console.Clear();
@@ -32,6 +37,9 @@ namespace Minesweeper
                 }
             }
         }
+        /// <summary>
+        /// 按键控制，事件管理
+        /// </summary>
         public void Logic()
         {
             ConsoleKeyInfo key = Console.ReadKey(true);
@@ -87,6 +95,7 @@ namespace Minesweeper
                         if (Map[player.X, player.Y] == 0)
                         {
                             BlowUpNone(player.X, player.Y, ConsoleColor.White);
+                            PrintPlayer(ConsoleColor.Yellow);
                         }
                         else
                         {
@@ -100,6 +109,9 @@ namespace Minesweeper
                 }
             }
         }
+        /// <summary>
+        /// 初始化数据地图，显示地图
+        /// </summary>
         void InitMap()
         {
             Map = new int[Size.X, Size.Y];
@@ -108,6 +120,9 @@ namespace Minesweeper
             CountMap();
             SurfaceMap = Basic.FillArray(Size.X, Size.Y, 0);
         }
+        /// <summary>
+        /// 将雷对应铺在底层地图上
+        /// </summary>
         void PutMinesToMap()
         {
             for (int i = 0; i < Mine; i++)
@@ -115,6 +130,9 @@ namespace Minesweeper
                 Map[Mines[i].X, Mines[i].Y] = -1;
             }
         }
+        /// <summary>
+        /// 计算底层地图雷周围的数据
+        /// </summary>
         void CountMap()
         {
             int n;
@@ -146,15 +164,21 @@ namespace Minesweeper
                 }
             }
         }
+        /// <summary>
+        /// 结束时事件
+        /// </summary>
         void End()
         {
             BlowUpEnd(player.X, player.Y, color_end);
         }
+        /// <summary>
+        /// 点到雷时，从当前坐标向外辐射打开地图
+        /// </summary>
         void BlowUpEnd(int x, int y, ConsoleColor co)
         {
             int a = 1;
             int n = 0;
-            int time = 140;
+            int time = 500;
             while (true)
             {
                 for (int i = 0; i <= a; i++)
@@ -210,6 +234,9 @@ namespace Minesweeper
                 else n = 0;
             }
         }
+        /// <summary>
+        /// 待完成，效果同BlowUpEnd
+        /// </summary>
         void BlowUpNone(int x, int y, ConsoleColor co)
         {
             PrintSingalSymbol(x, y, co, Map[x, y]);
@@ -281,9 +308,10 @@ namespace Minesweeper
                     }
                 }
             }
-
-
         }
+        /// <summary>
+        /// 检测当前坐标是否超过地图边界
+        /// </summary>
         bool IsOutOfRange(int x, int y)
         {
             bool a;
@@ -305,6 +333,9 @@ namespace Minesweeper
                 }
             }
         }
+        /// <summary>
+        /// 绘制上一步的移动绘图
+        /// </summary>
         void PrintLastMove()
         {
             if (SurfaceMap[player.X, player.Y] == 0)
@@ -316,6 +347,9 @@ namespace Minesweeper
                 PrintSingalSymbol(player.X, player.Y, ConsoleColor.White, Map[player.X, player.Y]);
             }
         }
+        /// <summary>
+        /// 绘制全部地图
+        /// </summary>
         void PrintMap()
         {
             Console.ForegroundColor = ConsoleColor.White;
@@ -328,12 +362,18 @@ namespace Minesweeper
                 }
             }
         }
+        /// <summary>
+        /// 绘制特定颜色的特定的符号
+        /// </summary>
         void PrintSingalSymbol(int x, int y, ConsoleColor co, symbol sy)
         {
             Console.ForegroundColor = co;
             Console.SetCursorPosition(PrintAt.X + x * 2, PrintAt.Y + y);
             Console.Write(Symbol[(int)sy]);
         }
+        /// <summary>
+        /// 绘制特定颜色的特定的符号
+        /// </summary>
         void PrintSingalSymbol(int x, int y, ConsoleColor co, int sy)
         {
             Console.ForegroundColor = co;
@@ -346,6 +386,9 @@ namespace Minesweeper
             Console.SetCursorPosition(x * 2, y);
             Console.Write(message);
         }
+        /// <summary>
+        /// 绘制人物
+        /// </summary>
         void PrintPlayer(ConsoleColor co)
         {
             Console.ForegroundColor = co;
